@@ -1,0 +1,15 @@
+{
+  "name": "Type_D",
+  "version": "v0.2",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "Type_D.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

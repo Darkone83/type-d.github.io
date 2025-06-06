@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Type_D ESP32 Web Flasher</title>
+    <script type="module" src="https://unpkg.com/esp-web-tools@9.0.3/dist/web/install-button.js?module"></script>
+    <style>
+      body { font-family: sans-serif; text-align: center; margin-top: 4em; }
+    </style>
+  </head>
+  <body>
+    <h1>Type_D ESP32 Web Flasher</h1>
+    <esp-web-install-button
+      manifest="firmware/manifest.json">
+    </esp-web-install-button>
+    <p>
+      <b>Instructions:</b> Plug your ESP32 into USB, click “Install,” and follow browser prompts.<br>
+      Supported on Chrome & Edge desktop browsers.
+    </p>
+    <hr>
+    <p>
+      <a href="https://github.com/YOURUSER/YOURREPO">View Source on GitHub</a>
+    </p>
+  </body>
+</html>
