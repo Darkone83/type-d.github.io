@@ -1,12 +1,12 @@
 {
   "name": "Type_D",
-  "version": "v0.2",
+  "version": "v0.5 Beta",
   "builds": [
     {
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "Type_D.bin",
+          "path": "upgrade.bin",
           "offset": 0
         }
       ]
