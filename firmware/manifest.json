@@ -1,6 +1,6 @@
 {
   "name": "Type_D",
-  "version": "v0.5.2 Beta",
+  "version": "v0.6 Beta",
   "builds": [
     {
       "chipFamily": "ESP32",
