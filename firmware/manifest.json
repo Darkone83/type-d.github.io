@@ -8,6 +8,10 @@
         {
           "path": "upgrade.bin",
           "offset": 0
+        },
+        {
+          "path": "ffat.bin",
+          "offset": 4259840
         }
       ]
     }
