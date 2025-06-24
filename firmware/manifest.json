@@ -10,7 +10,7 @@
           "offset": 0
         },
         {
-          "path": "ffat.bin",
+          "path": "fatfs.bin",
           "offset": 4259840
         }
       ]
