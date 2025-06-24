@@ -8,10 +8,6 @@
         {
           "path": "upgrade.bin",
           "offset": 0
-        },
-        {
-          "path": "fatfs.bin",
-          "offset": 4259840
         }
       ]
     }
