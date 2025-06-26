@@ -6,8 +6,12 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "upgrade.bin",
+          "path": "Type_D.bin",
           "offset": 0
+        },
+        {
+          "path": "fatfs.img",
+          "offset": 2686976    // 0x4259840 in decimal, update as needed
         }
       ]
     }
