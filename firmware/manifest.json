@@ -11,7 +11,7 @@
         },
         {
           "path": "fatfs.img",
-          "offset": 2686976    // 0x4259840 in decimal, update as needed
+          "offset": 4259840
         }
       ]
     }
