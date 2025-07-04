@@ -9,6 +9,13 @@
           "path": "Type_D.bin",
           "offset": 0
         }
+       {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "Type_D_S3.bin",
+          "offset": 0
+        }
       ]
     }
   ]
