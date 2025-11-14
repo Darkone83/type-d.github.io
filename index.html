@@ -325,7 +325,8 @@
               <div>
                 <div class="panel-title">Flashing controls</div>
                 <div class="panel-sub">
-                  Uses <code>firmware/manifest.json</code> to map images.
+                  Select the correct board below. Each option uses its own
+                  manifest and layout.
                 </div>
               </div>
               <span class="pill">Log shown during flash</span>
@@ -333,25 +334,21 @@
 
             <div class="field-row">
               <!-- PROJECT: add more options later; hook JS below -->
-              <label for="profile">Board / profile:</label>
+              <label for="profile">Board:</label>
               <select id="profile">
-                <option value="default">
-                  Type-D (ESP32 / ESP32-S3) – Firmware + FFat
-                </option>
+                <option value="esp32s3" selected>ESP32-S3 – Type-D Wireless</option>
+                <option value="esp32">ESP32 – Type-D (legacy)</option>
               </select>
             </div>
 
             <div class="button-row">
-              <!--
-                manifest -> your manifest.json
-                show-log -> enables console-style log
-              -->
+              <!-- manifest is set dynamically in JS based on board selection -->
               <esp-web-install-button
                 id="installer"
-                manifest="firmware/manifest.json"
+                manifest="firmware/manifest_esp32s3.json"
                 show-log>
                 <button slot="activate" class="primary-btn">
-                  ⚡ Program device
+                  Program device
                 </button>
                 <span slot="unsupported" class="unsupported">
                   This browser does not support WebSerial. Use Chrome or Edge
@@ -361,12 +358,12 @@
             </div>
 
             <ul class="info-list">
-              <li>Auto-detects ESP32 vs ESP32-S3 from the connected device.</li>
-              <li>Flashes <code>Type_D*.bin</code> at <code>0x0000</code>.</li>
               <li>
-                Flashes <code>ffatfs.bin</code> / <code>fatfs.bin</code> at
-                <code>0x410000</code>.
+                Make sure the selected board matches the hardware you have
+                connected.
               </li>
+              <li>Flashes Type_D firmware at address 0x0000.</li>
+              <li>Flashes FFat filesystem image at address 0x410000.</li>
             </ul>
 
             <div class="callout">
@@ -403,10 +400,7 @@
               Flashing steps:
             </div>
             <ul class="info-list">
-              <li>
-                Leave the profile on “Type-D … Firmware + FFat” (or choose
-                another profile if added later).
-              </li>
+              <li>Select ESP32-S3 or ESP32 from the drop-down.</li>
               <li>Click <strong>Program device</strong>.</li>
               <li>Select your ESP board from the port list.</li>
               <li>Watch the log window for erase/write progress.</li>
@@ -421,7 +415,6 @@
 
       <footer class="footer">
         <span>Works on Chrome &amp; Edge (desktop) with WebSerial.</span>
-        <!-- PROJECT: point to real repo/docs -->
         <span>
           Documentation &amp; source:&nbsp;
           <a
@@ -435,19 +428,28 @@
     </main>
 
     <script>
-      // Framework hook:
-      // add cases here if you introduce additional manifests/profiles.
+      // Board selection -> choose the correct manifest file
       const profileSelect = document.getElementById("profile");
       const installer = document.getElementById("installer");
 
-      profileSelect.addEventListener("change", () => {
+      function updateManifest() {
         switch (profileSelect.value) {
-          case "default":
+          case "esp32":
+            installer.setAttribute("manifest", "firmware/manifest_esp32.json");
+            break;
+          case "esp32s3":
           default:
-            installer.setAttribute("manifest", "firmware/manifest.json");
+            installer.setAttribute(
+              "manifest",
+              "firmware/manifest_esp32s3.json"
+            );
             break;
         }
-      });
+      }
+
+      profileSelect.addEventListener("change", updateManifest);
+      // Initialise on load
+      updateManifest();
     </script>
   </body>
 </html>
