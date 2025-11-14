@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
 
-    <!-- PROJECT: Page title shown in browser tab -->
+    <!-- PROJECT: tab title -->
     <title>Darkone Customs – Type-D ESP Web Flasher</title>
 
-    <!-- ESP Web Tools install button -->
+    <!-- ESP Web Tools (uses manifest.json) -->
     <script
       type="module"
       src="https://unpkg.com/esp-web-tools@9.0.3/dist/web/install-button.js?module">
@@ -15,8 +15,8 @@
     <style>
       :root {
         --bg: #020617;
-        --bg-elevated: #020617;
-        --border: #1e293b;
+        --panel: #0b1120;
+        --border: #1f2937;
         --accent: #f97316;
         --accent-soft: rgba(249, 115, 22, 0.16);
         --text-main: #f9fafb;
@@ -41,39 +41,42 @@
         color: var(--text-main);
       }
 
-      main.shell {
+      main.app {
         width: 100%;
         max-width: 960px;
         margin: 24px;
-        background: var(--bg-elevated);
-        border-radius: 18px;
+        background: var(--panel);
+        border-radius: 14px;
         border: 1px solid rgba(148, 163, 184, 0.32);
         box-shadow:
-          0 24px 60px rgba(0, 0, 0, 0.7),
+          0 24px 50px rgba(0, 0, 0, 0.7),
           0 0 0 1px rgba(15, 23, 42, 0.95);
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
       }
 
       header.header {
         display: flex;
         align-items: center;
-        padding: 14px 18px;
-        border-bottom: 1px solid rgba(55, 65, 81, 0.8);
         gap: 12px;
+        padding: 10px 14px;
+        border-bottom: 1px solid rgba(55, 65, 81, 0.9);
+        background: #020617;
       }
 
       .logo-wrap {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         border-radius: 999px;
+        overflow: hidden;
         background: radial-gradient(circle at 30% 0, #f97316, #7c2d12);
+        box-shadow:
+          0 0 0 1px rgba(15, 23, 42, 0.9),
+          0 0 30px rgba(249, 115, 22, 0.5);
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
-        box-shadow:
-          0 0 0 1px rgba(15, 23, 42, 0.85),
-          0 0 32px rgba(249, 115, 22, 0.5);
       }
 
       .logo-wrap img {
@@ -82,13 +85,13 @@
         object-fit: cover;
       }
 
-      .brand-text {
+      .brand {
         display: flex;
         flex-direction: column;
         gap: 2px;
       }
 
-      .brand-line-main {
+      .brand-main {
         font-size: 13px;
         font-weight: 600;
         letter-spacing: 0.06em;
@@ -96,42 +99,48 @@
         color: var(--text-muted);
       }
 
-      .brand-line-sub {
+      .brand-sub {
         font-size: 12px;
         color: var(--text-muted);
       }
 
-      .badge {
+      .tag-pill {
         margin-left: auto;
         font-size: 11px;
         padding: 4px 10px;
         border-radius: 999px;
         border: 1px solid rgba(148, 163, 184, 0.6);
         color: var(--text-muted);
-        background: rgba(15, 23, 42, 0.9);
+        background: #020617;
         white-space: nowrap;
       }
 
       section.body {
-        padding: 16px 18px 14px;
+        padding: 12px 14px 10px;
       }
 
-      .headline {
-        margin-bottom: 4px;
-        font-size: 18px;
+      .title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .heading {
+        font-size: 17px;
         font-weight: 600;
       }
 
-      .tagline {
-        font-size: 13px;
+      .version {
+        font-size: 12px;
         color: var(--text-muted);
-        margin-bottom: 18px;
       }
 
       .layout {
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 14px;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 12px;
       }
 
       @media (max-width: 800px) {
@@ -140,33 +149,30 @@
         }
       }
 
-      .card {
-        border-radius: 14px;
-        border: 1px solid rgba(55, 65, 81, 0.9);
-        background: radial-gradient(
-          circle at top left,
-          rgba(15, 23, 42, 0.95),
-          rgba(15, 23, 42, 0.98)
-        );
-        padding: 14px 14px 12px;
+      .panel {
+        background: #020617;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        padding: 10px;
       }
 
-      .card-heading {
+      .panel-header {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         gap: 8px;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
 
-      .card-title {
-        font-size: 13px;
+      .panel-title {
+        font-size: 12px;
         font-weight: 600;
         letter-spacing: 0.06em;
         text-transform: uppercase;
         color: var(--text-muted);
       }
 
-      .card-sub {
+      .panel-sub {
         font-size: 11px;
         color: var(--text-muted);
       }
@@ -179,14 +185,43 @@
         color: var(--text-muted);
       }
 
-      .install-wrap {
-        margin: 10px 0 8px;
+      .field-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+      }
+
+      label {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      select {
+        min-width: 200px;
+        font-size: 12px;
+        padding: 4px 6px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: #020617;
+        color: var(--text-main);
+      }
+
+      select:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent-soft);
+      }
+
+      .button-row {
+        margin: 8px 0 6px;
       }
 
       .primary-btn {
         border: none;
         border-radius: 999px;
-        padding: 8px 18px;
+        padding: 7px 18px;
         font-size: 13px;
         font-weight: 500;
         cursor: pointer;
@@ -194,7 +229,7 @@
         color: #111827;
         box-shadow:
           0 0 0 1px rgba(15, 23, 42, 0.9),
-          0 14px 32px rgba(249, 115, 22, 0.4);
+          0 14px 30px rgba(249, 115, 22, 0.4);
         display: inline-flex;
         align-items: center;
         gap: 8px;
@@ -222,183 +257,207 @@
         border: 1px solid rgba(248, 113, 113, 0.7);
       }
 
-      .bullet-list {
+      .info-list {
         font-size: 12px;
         color: var(--text-muted);
-        margin: 0;
-        padding-left: 18px;
+        margin: 4px 0 0;
+        padding-left: 16px;
       }
 
-      .bullet-list li {
-        margin-bottom: 4px;
+      .info-list li {
+        margin-bottom: 3px;
       }
 
       .callout {
-        margin-top: 10px;
+        margin-top: 8px;
         font-size: 11px;
         color: var(--danger);
         background: rgba(248, 113, 113, 0.08);
-        border-radius: 8px;
+        border-radius: 6px;
         padding: 6px 8px;
-        border: 1px solid rgba(248, 113, 113, 0.35);
+        border: 1px solid rgba(248, 113, 113, 0.36);
       }
 
       footer.footer {
-        padding: 8px 18px 12px;
-        border-top: 1px solid rgba(55, 65, 81, 0.8);
+        padding: 6px 14px 10px;
+        border-top: 1px solid rgba(55, 65, 81, 0.9);
         font-size: 11px;
         color: var(--text-muted);
         display: flex;
         justify-content: space-between;
-        gap: 10px;
         flex-wrap: wrap;
+        gap: 8px;
+        background: #020617;
       }
 
-      footer.footer a {
+      footer a {
         color: var(--accent);
         text-decoration: none;
       }
     </style>
   </head>
   <body>
-    <main class="shell">
+    <main class="app">
       <header class="header">
-        <!-- PROJECT: swap logo per project (keep path under /images) -->
+        <!-- PROJECT: change logo if needed; keep path under /images -->
         <div class="logo-wrap">
           <img src="images/dc.png" alt="Darkone Customs logo" />
         </div>
-        <div class="brand-text">
-          <!-- PROJECT: adjust branding lines -->
-          <div class="brand-line-main">DARKONE CUSTOMS</div>
-          <div class="brand-line-sub">Type-D / ESP32 Web Flasher</div>
+        <div class="brand">
+          <!-- PROJECT: branding lines -->
+          <div class="brand-main">DARKONE CUSTOMS</div>
+          <div class="brand-sub">Type-D / ESP32 Web Flasher</div>
         </div>
-        <div class="badge">ESP32 · ESP32-S3 · WebSerial</div>
+        <div class="tag-pill">ESP32 · ESP32-S3 · WebSerial</div>
       </header>
 
       <section class="body">
-        <!-- PROJECT: headline/tagline for the specific firmware -->
-        <div class="headline">Browser-based ESP flasher</div>
-        <div class="tagline">
-          This tool installs the official Type-D firmware bundle onto a
-          supported ESP32 or ESP32-S3 module, including the FFat filesystem
-          image used by the display.
+        <div class="title-row">
+          <!-- PROJECT: heading + version text -->
+          <div class="heading">Browser-based ESP flasher</div>
+          <div class="version">Current firmware: v0.7.2 Beta</div>
         </div>
 
         <div class="layout">
-          <!-- LEFT: Installer & “what gets flashed” -->
-          <div class="card">
-            <div class="card-heading">
+          <!-- LEFT: board/profile selection + program button -->
+          <div class="panel">
+            <div class="panel-header">
               <div>
-                <div class="card-title">Install firmware</div>
-                <div class="card-sub">
-                  Uses <code>firmware/manifest.json</code> to select the
-                  correct image layout per board.
+                <div class="panel-title">Flashing controls</div>
+                <div class="panel-sub">
+                  Uses <code>firmware/manifest.json</code> to map images.
                 </div>
               </div>
-              <span class="pill">Includes console log</span>
+              <span class="pill">Log shown in popup</span>
             </div>
 
-            <div class="install-wrap">
+            <div class="field-row">
+              <!-- PROJECT: add more options/profiles here later -->
+              <label for="profile">Board / profile:</label>
+              <select id="profile">
+                <option value="default">
+                  Type-D (ESP32 / ESP32-S3) – Firmware + FFat
+                </option>
+              </select>
+            </div>
+
+            <div class="button-row">
               <!--
+                NOTE:
+                - `manifest` points at your manifest.json
+                - `show-log` enables the console-like log while flashing
                 PROJECT:
-                - update manifest path if you move/rename it
-                - change button label to the project name
+                - if you add more manifests later, you can switch the
+                  `manifest` attribute with a tiny bit of JS based on
+                  the profile dropdown above.
               -->
               <esp-web-install-button
+                id="installer"
                 manifest="firmware/manifest.json"
                 show-log>
                 <button slot="activate" class="primary-btn">
-                  ⚡ Flash Type-D Firmware
+                  ⚡ Program device
                 </button>
                 <span slot="unsupported" class="unsupported">
-                  This browser doesn’t support WebSerial. Use Chrome or Edge on
-                  desktop.
+                  This browser does not support WebSerial. Use Chrome or Edge
+                  on desktop.
                 </span>
               </esp-web-install-button>
             </div>
 
-            <ul class="bullet-list">
-              <li>Auto-detects ESP32 vs ESP32-S3 from the connected device.</li>
-              <li>
-                Flashes the merged firmware image at
-                <code>0x0000</code>.
-              </li>
-              <li>
-                Flashes the FFat filesystem image at
-                <code>0x410000</code> (contains assets and settings for
-                Type-D).
-              </li>
+            <ul class="info-list">
+              <li>Detects ESP32 vs ESP32-S3 automatically.</li>
+              <li>Flashes merged firmware at <code>0x0000</code>.</li>
+              <li>Flashes FFat filesystem at <code>0x410000</code>.</li>
             </ul>
 
             <div class="callout">
-              <strong>Note:</strong> Flashing will overwrite the existing
-              firmware and FFat contents on the device. If you have custom
-              settings or files, back them up before continuing.
+              Flashing will overwrite the existing firmware and FFat partition
+              on the device. Back up any custom files or settings before you
+              continue.
             </div>
           </div>
 
-          <!-- RIGHT: User-facing instructions / supported boards -->
-          <div class="card">
-            <div class="card-heading">
+          <!-- RIGHT: clear user-facing instructions -->
+          <div class="panel">
+            <div class="panel-header">
               <div>
-                <div class="card-title">How to use this flasher</div>
-                <div class="card-sub">
+                <div class="panel-title">How to use</div>
+                <div class="panel-sub">
                   Recommended for production units and end-users.
                 </div>
               </div>
             </div>
 
-            <div class="card-sub" style="margin-bottom: 6px;">
+            <div class="panel-sub" style="margin-bottom: 4px;">
               Before you start:
             </div>
-            <ul class="bullet-list">
-              <li>Use a good USB-C / micro-USB data cable (no charge-only).</li>
-              <li>Close other serial tools (Arduino, VS Code, etc.).</li>
+            <ul class="info-list">
+              <li>Use a known-good USB data cable (no charge-only cables).</li>
+              <li>Close other serial tools (Arduino IDE, VS Code, etc.).</li>
               <li>
-                If your board has BOOT/EN buttons, be ready to hold BOOT if
-                prompted by the browser.
+                If your board has BOOT / EN buttons, be ready to hold BOOT
+                when the browser asks.
               </li>
             </ul>
 
-            <div class="card-sub" style="margin: 10px 0 4px;">
+            <div class="panel-sub" style="margin: 8px 0 4px;">
               Flashing steps:
             </div>
-            <ul class="bullet-list">
-              <li>Click <strong>“Flash Type-D Firmware”</strong>.</li>
-              <li>Select your ESP board from the port list.</li>
+            <ul class="info-list">
               <li>
-                Watch the log window for erase/write progress and any errors.
+                Select the correct board/profile if more than one option is
+                available.
               </li>
+              <li>Click <strong>Program device</strong>.</li>
+              <li>Choose your ESP board from the port list.</li>
+              <li>Watch the log window for erase/write progress.</li>
               <li>
-                When complete, press RESET (or power-cycle) the board to boot
-                into the new firmware.
+                When it finishes, press RESET or power-cycle the device to boot
+                the new firmware.
               </li>
-            </ul>
-
-            <!-- PROJECT: customise this list per project / hardware SKU -->
-            <div class="card-sub" style="margin: 10px 0 4px;">
-              Supported devices:
-            </div>
-            <ul class="bullet-list">
-              <li>ESP32 DevKit-style boards used with Type-D.</li>
-              <li>ESP32-S3 modules used with Type-D wireless display units.</li>
             </ul>
           </div>
         </div>
       </section>
 
       <footer class="footer">
-        <span>
-          Works on Chrome & Edge (desktop) with WebSerial enabled.
-        </span>
-        <!-- PROJECT: point to the correct GitHub repo / docs -->
+        <span>Works on Chrome &amp; Edge (desktop) with WebSerial.</span>
+        <!-- PROJECT: point to real repo/docs -->
         <span>
           Documentation &amp; source:&nbsp;
-          <a href="https://github.com/YOURUSER/YOURREPO" target="_blank" rel="noreferrer">
+          <a
+            href="https://github.com/YOURUSER/YOURREPO"
+            target="_blank"
+            rel="noreferrer"
+          >
             github.com/YOURUSER/YOURREPO
           </a>
         </span>
       </footer>
     </main>
+
+    <script>
+      // FRAMEWORK HOOK:
+      // If you add more profiles later (e.g. "Firmware only" vs "Full"),
+      // you can update `installer.manifest` here based on the selected
+      // value. For now, everything uses firmware/manifest.json.
+      const profileSelect = document.getElementById("profile");
+      const installer = document.getElementById("installer");
+
+      profileSelect.addEventListener("change", () => {
+        switch (profileSelect.value) {
+          case "default":
+          default:
+            installer.setAttribute("manifest", "firmware/manifest.json");
+            break;
+          /* Example:
+          case "fw-only":
+            installer.setAttribute("manifest", "firmware/manifest_fw_only.json");
+            break;
+          */
+        }
+      });
+    </script>
   </body>
 </html>

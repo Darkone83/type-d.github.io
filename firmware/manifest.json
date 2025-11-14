@@ -14,11 +14,11 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "Type_D_ESP32_merged.bin",
+          "path": "Type_D.bin",
           "offset": 0
         },
         {
-          "path": "Type_D_ESP32_ffat.bin",
+          "path": "ffatfs.bin",
           "offset": 4259840
         }
       ]
@@ -27,11 +27,11 @@
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "Type_D_ESP32S3_merged.bin",
+          "path": "Type_D_S3.bin",
           "offset": 0
         },
         {
-          "path": "Type_D_ESP32S3_ffat.bin",
+          "path": "fatfs.bin",
           "offset": 4259840
         }
       ]
