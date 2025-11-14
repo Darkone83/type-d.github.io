@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
 
-    <!-- PROJECT: tab title -->
+    <!-- PROJECT: Tab title -->
     <title>Darkone Customs – Type-D ESP Web Flasher</title>
 
-    <!-- ESP Web Tools (uses manifest.json) -->
+    <!-- ESP Web Tools -->
     <script
       type="module"
       src="https://unpkg.com/esp-web-tools@9.0.3/dist/web/install-button.js?module">
@@ -199,7 +199,7 @@
       }
 
       select {
-        min-width: 200px;
+        min-width: 220px;
         font-size: 12px;
         padding: 4px 6px;
         border-radius: 6px;
@@ -299,9 +299,9 @@
   <body>
     <main class="app">
       <header class="header">
-        <!-- PROJECT: change logo if needed; keep path under /images -->
+        <!-- PROJECT: swap logo if needed; keep under /images -->
         <div class="logo-wrap">
-          <img src="images/dc.png" alt="Darkone Customs logo" />
+          <img src="images/DC.png" alt="Darkone Customs logo" />
         </div>
         <div class="brand">
           <!-- PROJECT: branding lines -->
@@ -319,7 +319,7 @@
         </div>
 
         <div class="layout">
-          <!-- LEFT: board/profile selection + program button -->
+          <!-- LEFT: controls -->
           <div class="panel">
             <div class="panel-header">
               <div>
@@ -328,11 +328,11 @@
                   Uses <code>firmware/manifest.json</code> to map images.
                 </div>
               </div>
-              <span class="pill">Log shown in popup</span>
+              <span class="pill">Log shown during flash</span>
             </div>
 
             <div class="field-row">
-              <!-- PROJECT: add more options/profiles here later -->
+              <!-- PROJECT: add more options later; hook JS below -->
               <label for="profile">Board / profile:</label>
               <select id="profile">
                 <option value="default">
@@ -343,13 +343,8 @@
 
             <div class="button-row">
               <!--
-                NOTE:
-                - `manifest` points at your manifest.json
-                - `show-log` enables the console-like log while flashing
-                PROJECT:
-                - if you add more manifests later, you can switch the
-                  `manifest` attribute with a tiny bit of JS based on
-                  the profile dropdown above.
+                manifest -> your manifest.json
+                show-log -> enables console-style log
               -->
               <esp-web-install-button
                 id="installer"
@@ -366,9 +361,12 @@
             </div>
 
             <ul class="info-list">
-              <li>Detects ESP32 vs ESP32-S3 automatically.</li>
-              <li>Flashes merged firmware at <code>0x0000</code>.</li>
-              <li>Flashes FFat filesystem at <code>0x410000</code>.</li>
+              <li>Auto-detects ESP32 vs ESP32-S3 from the connected device.</li>
+              <li>Flashes <code>Type_D*.bin</code> at <code>0x0000</code>.</li>
+              <li>
+                Flashes <code>ffatfs.bin</code> / <code>fatfs.bin</code> at
+                <code>0x410000</code>.
+              </li>
             </ul>
 
             <div class="callout">
@@ -378,7 +376,7 @@
             </div>
           </div>
 
-          <!-- RIGHT: clear user-facing instructions -->
+          <!-- RIGHT: instructions -->
           <div class="panel">
             <div class="panel-header">
               <div>
@@ -393,11 +391,11 @@
               Before you start:
             </div>
             <ul class="info-list">
-              <li>Use a known-good USB data cable (no charge-only cables).</li>
+              <li>Use a known-good USB data cable.</li>
               <li>Close other serial tools (Arduino IDE, VS Code, etc.).</li>
               <li>
-                If your board has BOOT / EN buttons, be ready to hold BOOT
-                when the browser asks.
+                If your board has BOOT / EN buttons, be ready to hold BOOT when
+                the browser asks.
               </li>
             </ul>
 
@@ -406,11 +404,11 @@
             </div>
             <ul class="info-list">
               <li>
-                Select the correct board/profile if more than one option is
-                available.
+                Leave the profile on “Type-D … Firmware + FFat” (or choose
+                another profile if added later).
               </li>
               <li>Click <strong>Program device</strong>.</li>
-              <li>Choose your ESP board from the port list.</li>
+              <li>Select your ESP board from the port list.</li>
               <li>Watch the log window for erase/write progress.</li>
               <li>
                 When it finishes, press RESET or power-cycle the device to boot
@@ -429,8 +427,7 @@
           <a
             href="https://github.com/YOURUSER/YOURREPO"
             target="_blank"
-            rel="noreferrer"
-          >
+            rel="noreferrer">
             github.com/YOURUSER/YOURREPO
           </a>
         </span>
@@ -438,10 +435,8 @@
     </main>
 
     <script>
-      // FRAMEWORK HOOK:
-      // If you add more profiles later (e.g. "Firmware only" vs "Full"),
-      // you can update `installer.manifest` here based on the selected
-      // value. For now, everything uses firmware/manifest.json.
+      // Framework hook:
+      // add cases here if you introduce additional manifests/profiles.
       const profileSelect = document.getElementById("profile");
       const installer = document.getElementById("installer");
 
@@ -451,11 +446,6 @@
           default:
             installer.setAttribute("manifest", "firmware/manifest.json");
             break;
-          /* Example:
-          case "fw-only":
-            installer.setAttribute("manifest", "firmware/manifest_fw_only.json");
-            break;
-          */
         }
       });
     </script>
