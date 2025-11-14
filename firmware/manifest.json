@@ -1,20 +1,39 @@
 {
-  "name": "Type D v0.7.1 Beta",
-  "version": "v0.7.1 Beta",
+  "name": "Type D v0.7.2 Beta",
+  "version": "v0.7.2 Beta",
+
+  /* Optional metadata for your own tooling / UI; ignored by esp-web-tools */
+  "images": [
+    {
+      "src": "images/dc.png",
+      "label": "Darkone Customs Logo"
+    }
+  ],
+
   "builds": [
     {
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "Type_D.bin",
+          "path": "Type_D_ESP32_merged.bin",
           "offset": 0
         },
-       {
+        {
+          "path": "Type_D_ESP32_ffat.bin",
+          "offset": 4259840
+        }
+      ]
+    },
+    {
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "Type_D_S3.bin",
+          "path": "Type_D_S3_merged.bin",
           "offset": 0
+        },
+        {
+          "path": "Type_D_S3_ffat.bin",
+          "offset": 4259840
         }
       ]
     }
